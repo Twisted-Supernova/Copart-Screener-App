@@ -1,0 +1,1158 @@
+<h2 class="sr-only">Copart UK Deal Screener &mdash; enter listing details to get a GO / NO-GO verdict with full cost breakdown</h2>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ─── Blue theme variables ─────────────────────────────────── */
+:root {
+  --blue-50: #eff6ff;
+  --blue-100: #dbeafe;
+  --blue-200: #bfdbfe;
+  --blue-300: #93c5fd;
+  --blue-400: #60a5fa;
+  --blue-500: #3b82f6;
+  --blue-600: #2563eb;
+  --blue-700: #1d4ed8;
+  --blue-800: #1e40af;
+  --blue-900: #1e3a8a;
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+  --green-500: #22c55e;
+  --green-600: #16a34a;
+  --green-50: #f0fdf4;
+  --green-100: #dcfce7;
+  --red-500: #ef4444;
+  --red-600: #dc2626;
+  --red-50: #fef2f2;
+  --red-100: #fee2e2;
+  --amber-500: #f59e0b;
+  --amber-50: #fffbeb;
+  --amber-100: #fef3c7;
+}
+
+/* ─── Reset & base ─────────────────────────────────────────── */
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'DM Sans', var(--font-sans, system-ui, -apple-system, sans-serif);
+  font-size:14px;
+  color:var(--slate-800);
+  line-height:1.5;
+  background: transparent;
+}
+
+/* ─── Header banner ────────────────────────────────────────── */
+.header-bar {
+  background: linear-gradient(135deg, var(--blue-600) 0%, var(--blue-800) 50%, var(--slate-900) 100%);
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+.header-bar::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -5%;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.header-bar::after {
+  content: '';
+  position: absolute;
+  bottom: -60%;
+  left: 15%;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(96,165,250,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.header-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 1;
+}
+.header-sub {
+  font-size: 11px;
+  color: var(--blue-200);
+  font-weight: 400;
+  margin-top: 2px;
+  position: relative;
+  z-index: 1;
+}
+.header-badge {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: var(--blue-100);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 8px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Tabs ─────────────────────────────────────────────────── */
+.tabs{display:flex;gap:2px;margin-bottom:1.5rem;position:relative}
+.tabs::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1.5px;background:var(--slate-200);border-radius:1px}
+.tab{
+  padding:10px 22px;font-size:13px;font-weight:600;cursor:pointer;
+  border:none;background:none;color:var(--slate-400);
+  border-bottom:2.5px solid transparent;margin-bottom:-1px;
+  font-family:'DM Sans', var(--font-sans, sans-serif);
+  transition:color .2s,border-color .2s;position:relative;z-index:1;letter-spacing:.01em;
+}
+.tab:hover{color:var(--blue-500)}
+.tab.active{color:var(--blue-600);border-bottom-color:var(--blue-600)}
+.panel{display:none}.panel.active{display:block}
+
+/* ─── Layout grids ─────────────────────────────────────────── */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px}
+
+/* ─── Section cards ────────────────────────────────────────── */
+.section{
+  background:var(--slate-50);
+  border-radius:14px;padding:1.25rem 1.35rem;margin-bottom:14px;
+  border:1px solid var(--slate-200);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.section:hover {
+  border-color: var(--blue-200);
+  box-shadow: 0 2px 12px rgba(37,99,235,0.06);
+}
+.section-title{
+  font-size:10.5px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--blue-600);margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;
+}
+.section-title::before{
+  content:'';display:inline-block;width:3px;height:14px;
+  border-radius:2px;background:linear-gradient(180deg, var(--blue-400), var(--blue-600));
+}
+
+/* ─── Form fields ──────────────────────────────────────────── */
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:11px;color:var(--slate-600);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.field input,.field select{
+  font-family:'DM Sans', var(--font-sans, sans-serif);font-size:13px;
+  padding:9px 12px;
+  border:1px solid var(--slate-300);
+  border-radius:10px;
+  background:#fff;
+  color:var(--slate-800);
+  transition:border-color .2s,box-shadow .2s;
+  outline:none;
+  -webkit-appearance:none;
+}
+.field input::placeholder{color:var(--slate-400);opacity:.7}
+.field input:focus,.field select:focus{
+  border-color:var(--blue-400);
+  box-shadow:0 0 0 3px rgba(59,130,246,0.12);
+}
+.field select{
+  cursor:pointer;padding-right:28px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;
+}
+
+/* ─── Radio buttons (Yes/No toggles) ──────────────────────── */
+.radio-row{display:flex;gap:6px}
+.radio-btn{
+  flex:1;padding:8px 10px;font-size:12px;font-weight:600;
+  border:1px solid var(--slate-300);border-radius:10px;
+  text-align:center;cursor:pointer;
+  color:var(--slate-400);
+  transition:all .2s;user-select:none;
+  background:#fff;
+}
+.radio-btn:hover{border-color:var(--blue-300);color:var(--blue-500)}
+.radio-btn.active{
+  background:linear-gradient(135deg, var(--blue-500), var(--blue-600));
+  color:#fff;
+  border-color:var(--blue-600);
+  box-shadow:0 2px 8px rgba(37,99,235,0.25);
+}
+
+/* ─── Checkboxes ───────────────────────────────────────────── */
+.check-row{display:flex;align-items:center;gap:8px;font-size:13px;padding:5px 0;cursor:pointer;color:var(--slate-600);transition:color .15s}
+.check-row:hover{color:var(--slate-800)}
+.check-row input[type=checkbox]{
+  cursor:pointer;width:16px;height:16px;accent-color:var(--blue-600);
+  border-radius:4px;flex-shrink:0;
+}
+
+/* ─── Metric cards ─────────────────────────────────────────── */
+.metric-card{
+  background:#fff;
+  border:1px solid var(--slate-200);
+  border-radius:12px;padding:14px 16px;
+  transition:border-color .2s, box-shadow .2s, transform .15s;
+}
+.metric-card:hover{
+  border-color:var(--blue-200);
+  box-shadow: 0 4px 14px rgba(37,99,235,0.08);
+  transform: translateY(-1px);
+}
+.metric-label{font-size:10px;color:var(--slate-500);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.metric-val{font-size:18px;font-weight:600;font-family:'JetBrains Mono',var(--font-mono, monospace);letter-spacing:-.02em;color:var(--blue-700)}
+
+/* ─── Verdict box ──────────────────────────────────────────── */
+.verdict-box{
+  border-radius:14px;padding:1.2rem 1.35rem;margin-bottom:14px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  transition:background .3s,border-color .3s;
+}
+.verdict-go{
+  background:linear-gradient(135deg, var(--green-50), #ecfdf5);
+  border:1.5px solid var(--green-500);
+}
+.verdict-nogo{
+  background:linear-gradient(135deg, var(--red-50), #fff1f2);
+  border:1.5px solid var(--red-500);
+}
+.verdict-warn{
+  background:linear-gradient(135deg, var(--amber-50), #fefce8);
+  border:1.5px solid var(--amber-500);
+}
+.verdict-label{font-size:17px;font-weight:700;letter-spacing:-.01em}
+.verdict-go .verdict-label{color:var(--green-600)}
+.verdict-nogo .verdict-label{color:var(--red-600)}
+.verdict-warn .verdict-label{color:var(--amber-500)}
+.verdict-detail{font-size:12px;margin-top:5px;opacity:.85;line-height:1.45}
+.verdict-go .verdict-detail{color:var(--green-600)}
+.verdict-nogo .verdict-detail{color:var(--red-600)}
+.verdict-warn .verdict-detail{color:var(--amber-500)}
+
+/* ─── Flags ────────────────────────────────────────────────── */
+.flag{display:flex;align-items:flex-start;gap:8px;font-size:12px;padding:6px 0;line-height:1.45}
+.flag-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.flag-red .flag-dot{background:var(--red-500)}
+.flag-red{color:var(--red-600)}
+.flag-amber .flag-dot{background:var(--amber-500)}
+.flag-amber{color:#92400e}
+.flag-ok .flag-dot{background:var(--green-500)}
+.flag-ok{color:var(--green-600)}
+
+/* ─── Cost breakdown rows ──────────────────────────────────── */
+.cost-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;font-size:13px;border-bottom:1px solid var(--slate-200)}
+.cost-row:last-child{border-bottom:none;font-weight:700;padding-top:12px;font-size:14px;border-top:2px solid var(--blue-200);margin-top:6px;color:var(--blue-700)}
+.cost-label{color:var(--slate-600)}
+.cost-val{font-family:'JetBrains Mono',var(--font-mono, monospace);letter-spacing:-.01em;color:var(--slate-800)}
+.cost-row:last-child .cost-val{color:var(--blue-700)}
+
+/* ─── Max bid box ──────────────────────────────────────────── */
+.maxbid-box{
+  background:linear-gradient(135deg, var(--blue-50), #eff6ff);
+  border:1.5px solid var(--blue-300);
+  border-radius:14px;padding:14px 18px;margin-top:10px;margin-bottom:14px;
+  position:relative;
+  overflow:hidden;
+}
+.maxbid-box::after {
+  content:'';position:absolute;top:-30px;right:-20px;
+  width:100px;height:100px;border-radius:50%;
+  background:radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
+}
+.maxbid-label{font-size:10px;font-weight:700;color:var(--blue-600);margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em}
+.maxbid-val{font-size:24px;font-weight:700;font-family:'JetBrains Mono',var(--font-mono, monospace);color:var(--blue-700);letter-spacing:-.02em;position:relative;z-index:1}
+.maxbid-nogo{font-size:15px;font-weight:700;color:var(--red-500)}
+
+/* ─── Buttons ──────────────────────────────────────────────── */
+.save-btn{
+  width:100%;padding:13px;font-size:13px;font-weight:700;
+  border:none;border-radius:12px;cursor:pointer;
+  background:linear-gradient(135deg, var(--blue-500), var(--blue-700));
+  color:#fff;
+  font-family:'DM Sans', var(--font-sans, sans-serif);letter-spacing:.02em;
+  transition:opacity .2s,transform .1s,box-shadow .2s;
+  box-shadow: 0 4px 14px rgba(37,99,235,0.3);
+}
+.save-btn:hover{opacity:.92;box-shadow: 0 6px 20px rgba(37,99,235,0.35)}
+.save-btn:active{transform:scale(.99)}
+
+/* ─── Saved deals table ────────────────────────────────────── */
+.deals-table{width:100%;border-collapse:collapse;font-size:12px}
+.deals-table th{
+  text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.06em;color:var(--blue-600);padding:10px 8px;
+  border-bottom:2px solid var(--blue-200);
+  background:var(--blue-50);
+}
+.deals-table th:first-child{border-radius:8px 0 0 0}
+.deals-table th:last-child{border-radius:0 8px 0 0}
+.deals-table td{padding:10px 8px;border-bottom:1px solid var(--slate-200);vertical-align:middle}
+.deals-table tr:last-child td{border-bottom:none}
+.deals-table tbody tr{transition:background .15s}
+.deals-table tbody tr:hover{background:var(--blue-50)}
+.badge{display:inline-block;padding:4px 12px;border-radius:8px;font-size:10px;font-weight:700;letter-spacing:.03em;text-transform:uppercase}
+.badge-go{background:var(--green-100);color:var(--green-600)}
+.badge-nogo{background:var(--red-100);color:var(--red-600)}
+.badge-warn{background:var(--amber-100);color:#92400e}
+.del-btn,.load-btn{
+  font-size:11px;border:1px solid var(--slate-300);
+  background:#fff;border-radius:8px;padding:5px 12px;cursor:pointer;transition:all .15s;
+  font-family:'DM Sans', var(--font-sans, sans-serif);font-weight:500;
+}
+.del-btn{color:var(--slate-500)}
+.del-btn:hover{color:var(--red-600);border-color:var(--red-400);background:var(--red-50)}
+.load-btn{color:var(--blue-600)}
+.load-btn:hover{color:var(--blue-700);border-color:var(--blue-400);background:var(--blue-50)}
+.reset-btn{
+  width:100%;padding:13px;font-size:13px;font-weight:700;
+  border:1px solid var(--slate-300);border-radius:12px;cursor:pointer;
+  background:#fff;color:var(--slate-600);
+  font-family:'DM Sans', var(--font-sans, sans-serif);letter-spacing:.02em;
+  transition:all .2s;margin-top:8px;
+}
+.reset-btn:hover{border-color:var(--blue-300);color:var(--blue-600);background:var(--blue-50)}
+.empty-state{text-align:center;padding:3rem 1rem;color:var(--slate-400);font-size:13px;line-height:1.6}
+
+/* ─── Notes / helpers ──────────────────────────────────────── */
+.note{font-size:11px;color:var(--slate-500);margin-top:6px;line-height:1.55}
+
+/* ─── Number spinner ───────────────────────────────────────── */
+input[type=number]::-webkit-inner-spin-button{opacity:1}
+
+/* ─── Screener two-panel layout ─────────────────────────────── */
+.screener-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 16px;
+  align-items: start;
+}
+.results-col {
+  position: sticky;
+  top: 1rem;
+}
+
+/* ─── Core numbers section highlight ─────────────────────────── */
+.section-core {
+  background: linear-gradient(135deg, var(--blue-50), #eff6ff);
+  border-color: var(--blue-300) !important;
+}
+.section-core:hover {
+  border-color: var(--blue-400) !important;
+}
+
+/* ─── Step number badges ──────────────────────────────────────── */
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--blue-600);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  flex-shrink: 0;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.section-title:has(.step-num)::before { display: none; }
+
+/* ─── Required star marker ────────────────────────────────────── */
+.req { color: var(--blue-500); margin-left: 1px; font-size: 12px; }
+
+/* ─── £ input prefix wrapper ─────────────────────────────────── */
+.input-wrap { position: relative; display: flex; align-items: center; }
+.input-prefix {
+  position: absolute;
+  left: 11px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate-500);
+  pointer-events: none;
+  z-index: 1;
+  line-height: 1;
+}
+.input-wrap input[type=number],
+.input-wrap input[type=text] { padding-left: 24px; width: 100%; }
+
+/* ─── Optional badge on section titles ───────────────────────── */
+.opt-badge {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--slate-400);
+  font-style: italic;
+}
+
+/* ─── Action row (save / reset) ──────────────────────────────── */
+.action-row { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+.reset-link {
+  background: none;
+  border: none;
+  color: var(--slate-500);
+  font-size: 12px;
+  font-family: 'DM Sans', var(--font-sans, sans-serif);
+  cursor: pointer;
+  text-align: center;
+  padding: 6px;
+  transition: color .2s;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.reset-link:hover { color: var(--blue-600); }
+
+/* ─── Responsive ───────────────────────────────────────────── */
+@media(max-width:680px){
+  .screener-layout{grid-template-columns:1fr}
+  .results-col{position:static}
+  .grid2,.grid3{grid-template-columns:1fr}
+  .grid4{grid-template-columns:1fr 1fr}
+  .header-bar{flex-direction:column;align-items:flex-start;gap:10px}
+}
+</style>
+
+<!-- ═══════════════════ HEADER ═══════════════════ -->
+<div class="header-bar">
+  <div>
+    <div class="header-title">Copart UK Deal Screener</div>
+    <div class="header-sub">Full cost breakdown &bull; GO / NO-GO verdict &bull; 2026 Fee B schedule</div>
+  </div>
+  <div class="header-badge">Budget: &pound;10k</div>
+</div>
+
+<!-- ═══════════════════ TABS ═══════════════════ -->
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('screener',this)">New Deal</button>
+  <button class="tab" onclick="switchTab('saved',this)" id="saved-tab">Saved Deals (0)</button>
+</div>
+
+<!-- ═══════════════════ SCREENER PANEL ═══════════════════ -->
+<div id="screener" class="panel active">
+  <div class="screener-layout">
+
+    <!-- ══ LEFT: INPUTS ══ -->
+    <div class="inputs-col">
+
+      <!-- Step 1 — Key Numbers (required) -->
+      <div class="section section-core">
+        <div class="section-title">
+          <span class="step-num">1</span>&nbsp;Key Numbers
+          <span class="opt-badge" style="color:var(--blue-500);font-style:normal;font-weight:600">&#9733; required for verdict</span>
+        </div>
+        <div class="grid2" style="margin-bottom:10px">
+          <div class="field">
+            <label>Hammer Price <span class="req">&#9733;</span></label>
+            <div class="input-wrap">
+              <span class="input-prefix">&pound;</span>
+              <input type="number" id="hammer" placeholder="3500" oninput="calc()">
+            </div>
+          </div>
+          <div class="field">
+            <label>Your Resale Price <span class="req">&#9733;</span></label>
+            <div class="input-wrap">
+              <span class="input-prefix">&pound;</span>
+              <input type="number" id="resale" placeholder="8200" oninput="calc()">
+            </div>
+          </div>
+        </div>
+        <p class="note" style="color:var(--blue-600)">These two fields give you an instant GO / NO-GO. Fill in sections below to sharpen the numbers.</p>
+      </div>
+
+      <!-- Step 2 — Costs -->
+      <div class="section">
+        <div class="section-title"><span class="step-num">2</span>&nbsp;Your Costs</div>
+        <div class="grid2" style="margin-bottom:12px">
+          <div class="field">
+            <label>Repairs (pre-contingency)</label>
+            <div class="input-wrap">
+              <span class="input-prefix">&pound;</span>
+              <input type="number" id="repairs" placeholder="1200" oninput="calc()">
+            </div>
+          </div>
+          <div class="field">
+            <label>Transport</label>
+            <div class="input-wrap">
+              <span class="input-prefix">&pound;</span>
+              <input type="number" id="transport" placeholder="200" oninput="calc()">
+            </div>
+          </div>
+        </div>
+        <div class="grid2" style="margin-bottom:10px">
+          <div class="field">
+            <label>Lot Type</label>
+            <select id="lottype" onchange="calc()">
+              <option value="margin">VAT Margin (most common)</option>
+              <option value="qualifying">VAT Qualifying (+20% on hammer)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Condition</label>
+            <select id="condition" onchange="calc()">
+              <option value="drives">Starts &amp; Drives</option>
+              <option value="nonrunner">Non-runner</option>
+            </select>
+          </div>
+        </div>
+        <label class="check-row" style="margin-bottom:4px"><input type="checkbox" id="contingency" onchange="calc()" checked> Add 20% repair contingency (recommended)</label>
+        <label class="check-row" style="margin-bottom:4px"><input type="checkbox" id="prebid" onchange="calc()" checked> Pre-bid (saves &pound;12.60 on internet fee)</label>
+        <label class="check-row"><input type="checkbox" id="motcheck" onchange="calc()"> MOT test needed (+&pound;55)</label>
+      </div>
+
+      <!-- Step 3 — Vehicle Details (optional) -->
+      <div class="section">
+        <div class="section-title">
+          <span class="step-num">3</span>&nbsp;Vehicle Details
+          <span class="opt-badge">optional &mdash; for your records</span>
+        </div>
+        <div class="grid3" style="margin-bottom:12px">
+          <div class="field"><label>Make</label><input type="text" id="make" placeholder="e.g. Ford" oninput="calc()"></div>
+          <div class="field"><label>Model</label><input type="text" id="model" placeholder="e.g. Fiesta" oninput="calc()"></div>
+          <div class="field"><label>Year</label><input type="number" id="year" placeholder="2021" min="2005" max="2026" oninput="calc()"></div>
+        </div>
+        <div class="grid2" style="margin-bottom:12px">
+          <div class="field"><label>Lot Number</label><input type="text" id="lot" placeholder="e.g. 12345678" oninput="calc()"></div>
+          <div class="field"><label>Auction Date</label><input type="date" id="auction-date" oninput="calc()"></div>
+        </div>
+        <div class="grid2" style="margin-bottom:12px">
+          <div class="field"><label>Mileage</label><input type="number" id="mileage" placeholder="35000" oninput="calc()"></div>
+          <div class="field">
+            <label>Category</label>
+            <select id="category" onchange="calc()">
+              <option value="clean">Clean title</option>
+              <option value="n">Cat N</option>
+              <option value="s">Cat S</option>
+              <option value="a">Cat A &mdash; do not buy</option>
+              <option value="b">Cat B &mdash; do not buy</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="field">
+            <label>Keys included?</label>
+            <div class="radio-row">
+              <div class="radio-btn active" id="keys-yes" onclick="setRadio('keys','yes')">Yes</div>
+              <div class="radio-btn" id="keys-no" onclick="setRadio('keys','no')">No</div>
+            </div>
+          </div>
+          <div class="field">
+            <label>V5C included?</label>
+            <div class="radio-row">
+              <div class="radio-btn active" id="v5c-yes" onclick="setRadio('v5c','yes')">Yes</div>
+              <div class="radio-btn" id="v5c-no" onclick="setRadio('v5c','no')">No</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4 — Resale Guidance (optional) -->
+      <div class="section">
+        <div class="section-title">
+          <span class="step-num">4</span>&nbsp;Resale Guidance
+          <span class="opt-badge">optional</span>
+        </div>
+        <div class="field" style="margin-bottom:10px">
+          <label>Clean retail price (Autotrader private)</label>
+          <div class="input-wrap">
+            <span class="input-prefix">&pound;</span>
+            <input type="number" id="cleanretail" placeholder="9500" oninput="calc()">
+          </div>
+        </div>
+        <div id="cat-discount-note" class="note" style="display:none"></div>
+        <div id="buying-discount-flag" style="display:none;margin-top:6px"></div>
+        <p class="note" style="margin-top:8px">Use lowest 3&ndash;5 private listings, minus 5&ndash;10%. For Cat N/S enter the adjusted figure as your resale price above.</p>
+      </div>
+
+      <!-- Step 5 — Red Flags -->
+      <div class="section">
+        <div class="section-title"><span class="step-num">5</span>&nbsp;Red Flag Checks</div>
+        <label class="check-row"><input type="checkbox" id="finance" onchange="calc()"> Outstanding finance on HPI</label>
+        <label class="check-row"><input type="checkbox" id="mileagediscrepancy" onchange="calc()"> Mileage discrepancy on MOT history</label>
+        <label class="check-row"><input type="checkbox" id="structural" onchange="calc()"> Structural / chassis damage visible in photos</label>
+        <label class="check-row"><input type="checkbox" id="widequotes" onchange="calc()"> Repair quotes vary wildly (hidden damage likely)</label>
+      </div>
+
+    </div><!-- /inputs-col -->
+
+    <!-- ══ RIGHT: RESULTS (sticky) ══ -->
+    <div class="results-col">
+
+      <!-- Budget cap flag -->
+      <div id="budget-cap-flag" style="display:none;margin-bottom:10px"></div>
+
+      <!-- Verdict -->
+      <div id="verdict-box" class="verdict-box verdict-warn" style="margin-top:0;margin-bottom:14px">
+        <div>
+          <div class="verdict-label" id="verdict-label">Enter details</div>
+          <div class="verdict-detail" id="verdict-detail">Fill Hammer Price &#9733; and Resale &#9733; to get a verdict</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          <div style="font-size:10px;font-weight:700;color:inherit;opacity:.65;text-transform:uppercase;letter-spacing:.06em">Profit</div>
+          <div style="font-size:24px;font-weight:700;font-family:'JetBrains Mono',var(--font-mono, monospace);letter-spacing:-.02em" id="profit-display">&mdash;</div>
+        </div>
+      </div>
+
+      <!-- Max Bid -->
+      <div class="maxbid-box" style="margin-top:0;margin-bottom:14px">
+        <div class="maxbid-label">Maximum Bid (do not exceed)</div>
+        <div id="maxbid-val" class="maxbid-val">&mdash;</div>
+        <div class="note" id="maxbid-note" style="color:var(--blue-600)">Enter hammer &amp; resale to calculate.</div>
+      </div>
+
+      <!-- Metrics: show ROI and All-in; keep Fee B + Total Fees hidden for JS compat -->
+      <div class="grid2" style="margin-bottom:14px">
+        <div class="metric-card"><div class="metric-label">ROI</div><div class="metric-val" id="roi-val">&mdash;</div></div>
+        <div class="metric-card"><div class="metric-label">All-in Cost</div><div class="metric-val" id="total-val">&mdash;</div></div>
+      </div>
+      <div style="display:none"><span id="feeb-val"></span><span id="fees-val"></span></div>
+
+      <!-- Cost Breakdown -->
+      <div class="section" style="margin-bottom:14px">
+        <div class="section-title">Cost Breakdown</div>
+        <div id="cost-breakdown">
+          <div class="cost-row"><span class="cost-label">Hammer price</span><span class="cost-val" id="b-hammer">&mdash;</span></div>
+          <div class="cost-row"><span class="cost-label">Fee B (inc VAT)</span><span class="cost-val" id="b-feeb">&mdash;</span></div>
+          <div class="cost-row"><span class="cost-label">Internet fee</span><span class="cost-val" id="b-internet">&mdash;</span></div>
+          <div class="cost-row"><span class="cost-label">Lot retrieval</span><span class="cost-val" id="b-retrieval">&mdash;</span></div>
+          <div class="cost-row"><span class="cost-label">Repairs (incl. contingency)</span><span class="cost-val" id="b-repairs">&mdash;</span></div>
+          <div class="cost-row"><span class="cost-label">Transport</span><span class="cost-val" id="b-transport">&mdash;</span></div>
+          <div id="cats-row" class="cost-row" style="display:none"><span class="cost-label">Cat S re-inspection</span><span class="cost-val">&pound;150</span></div>
+          <div id="v5c-row" class="cost-row" style="display:none"><span class="cost-label">V5C replacement (DVLA V62)</span><span class="cost-val">&pound;25</span></div>
+          <div class="cost-row"><span class="cost-label">HPI check</span><span class="cost-val">&pound;15</span></div>
+          <div class="cost-row"><span class="cost-label">Temp insurance</span><span class="cost-val">&pound;20</span></div>
+          <div class="cost-row"><span class="cost-label">Advertising</span><span class="cost-val">&pound;25</span></div>
+          <div id="mot-row" class="cost-row" style="display:none"><span class="cost-label">MOT test</span><span class="cost-val">&pound;55</span></div>
+          <div class="cost-row"><span>Total all-in cost</span><span class="cost-val" id="b-total">&mdash;</span></div>
+        </div>
+      </div>
+
+      <!-- Flags -->
+      <div id="flags-section" class="section" style="margin-bottom:14px;display:none">
+        <div class="section-title">Flags Detected</div>
+        <div id="flags-list"></div>
+      </div>
+
+      <!-- Actions -->
+      <div class="action-row">
+        <button class="save-btn" onclick="saveDeal()">Save This Deal to Comparison List</button>
+        <button class="reset-link" onclick="resetForm()">&#8635; Reset / New Deal</button>
+      </div>
+
+    </div><!-- /results-col -->
+
+  </div>
+</div>
+
+<!-- ═══════════════════ SAVED DEALS PANEL ═══════════════════ -->
+<div id="saved" class="panel">
+  <div id="saved-empty" class="empty-state">No deals saved yet.<br>Screen a car and hit &ldquo;Save This Deal&rdquo; to start comparing.</div>
+  <div id="saved-content" style="display:none">
+    <div style="overflow-x:auto">
+      <table class="deals-table">
+        <thead>
+          <tr>
+            <th>Vehicle</th>
+            <th>Cat</th>
+            <th>Type</th>
+            <th>Hammer</th>
+            <th>All-in</th>
+            <th>Resale</th>
+            <th>Profit</th>
+            <th>ROI</th>
+            <th>Max Bid</th>
+            <th>Verdict</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="deals-tbody"></tbody>
+      </table>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:1.25rem">
+      <button class="del-btn" style="padding:7px 14px;font-size:12px" onclick="clearAll()">Clear All Deals</button>
+      <button class="load-btn" style="padding:7px 14px;font-size:12px" onclick="exportCSV()">Export CSV</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ JAVASCRIPT ═══════════════════ -->
+<script>
+/* ── State ─────────────────────────────────────────────────── */
+const state = { keys:'yes', v5c:'yes' };
+
+/* ── Persistence ───────────────────────────────────────────── */
+const STORAGE_KEY = 'copart_saved_deals_v5';
+let savedDeals = [];
+
+function persistDeals() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(savedDeals)); } catch(e) {}
+}
+
+function loadPersistedDeals() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) savedDeals = JSON.parse(raw);
+  } catch(e) { savedDeals = []; }
+}
+
+function setRadio(group, val) {
+  state[group] = val;
+  document.getElementById(group+'-yes').classList.toggle('active', val==='yes');
+  document.getElementById(group+'-no').classList.toggle('active', val==='no');
+  calc();
+}
+
+/* ── Fee schedule (2026 Copart Fee B) ──────────────────────── */
+function getFeeB(h) {
+  if (h < 1000) return 210;
+  if (h < 1500) return 270;
+  if (h < 2000) return 330;
+  if (h < 2500) return 408;
+  if (h < 3000) return 468;
+  if (h < 3500) return 510;
+  if (h < 4000) return 558;
+  if (h < 5000) return 612;
+  return 666;
+}
+
+function getInternetFee(h, prebid) {
+  let fee;
+  if (h < 1500)      fee = prebid ? 70.80 : 83.40;
+  else if (h < 5000) fee = prebid ? 94.80 : 107.40;
+  else               fee = prebid ? 118.80 : 131.40;
+  return fee;
+}
+
+/* ── Formatting ────────────────────────────────────────────── */
+function fmt(n) {
+  if (n === null || n === undefined || isNaN(n)) return '\u2014';
+  return '\u00A3' + Math.round(n).toLocaleString('en-GB');
+}
+
+function fmtPct(n) {
+  if (n === null || n === undefined || isNaN(n) || !isFinite(n)) return '\u2014';
+  return n.toFixed(1) + '%';
+}
+
+/* ── Max bid calculator ────────────────────────────────────── */
+function calcMaxBid(resale, repairs, transport, otherFixed, minProfit, lottype, prebid) {
+  const isQualifying = lottype === 'qualifying';
+  const target = resale - repairs - transport - otherFixed - minProfit;
+  let est = isQualifying ? target / 1.2 : target;
+  for (let i = 0; i < 12; i++) {
+    if (est <= 0) return 0;
+    const fees = getFeeB(est) + getInternetFee(est, prebid) + 60;
+    est = isQualifying ? (target - fees) / 1.2 : target - fees;
+  }
+  return Math.max(0, Math.floor(est));
+}
+
+/* ── Main calculation ──────────────────────────────────────── */
+function calc() {
+  const hammer      = parseFloat(document.getElementById('hammer').value) || 0;
+  const repairsRaw  = parseFloat(document.getElementById('repairs').value) || 0;
+  const transport   = parseFloat(document.getElementById('transport').value) || 0;
+  const resale      = parseFloat(document.getElementById('resale').value) || 0;
+  const cleanretail = parseFloat(document.getElementById('cleanretail').value) || 0;
+  const category    = document.getElementById('category').value;
+  const lottype     = document.getElementById('lottype').value;
+  const condition   = document.getElementById('condition').value;
+  const prebid      = document.getElementById('prebid').checked;
+  const withContingency = document.getElementById('contingency').checked;
+  const needsMot    = document.getElementById('motcheck').checked;
+  const hasFinance  = document.getElementById('finance').checked;
+  const mileageDisc = document.getElementById('mileagediscrepancy').checked;
+  const structural  = document.getElementById('structural').checked;
+  const wideQuotes  = document.getElementById('widequotes').checked;
+
+  const repairs     = withContingency ? repairsRaw * 1.2 : repairsRaw;
+  const catSCost    = category === 's' ? 150 : 0;
+  const motCost     = needsMot ? 55 : 0;
+  const v5cCost     = state.v5c === 'no' ? 25 : 0;
+  const fixedOther  = 15 + 20 + 25 + catSCost + motCost + v5cCost;
+
+  document.getElementById('cats-row').style.display = category === 's' ? '' : 'none';
+  document.getElementById('mot-row').style.display  = needsMot ? '' : 'none';
+  document.getElementById('v5c-row').style.display  = state.v5c === 'no' ? '' : 'none';
+
+  const isQualifying  = lottype === 'qualifying';
+  const actualHammer  = isQualifying ? hammer * 1.2 : hammer;
+  const feeB          = hammer > 0 ? getFeeB(hammer) : 0;
+  const internetFee   = hammer > 0 ? getInternetFee(hammer, prebid) : 0;
+  const totalFees     = feeB + internetFee + 60;
+  const totalCost     = actualHammer + totalFees + repairs + transport + fixedOther;
+  const profit        = (resale > 0 && hammer > 0) ? resale - totalCost : NaN;
+  const roi           = profit / totalCost * 100;
+
+  const minProfit     = totalCost > 5000 ? 750 : 500;
+
+  const maxBid        = (resale > 0 && hammer > 0)
+                          ? calcMaxBid(resale, repairs, transport, fixedOther, minProfit, lottype, prebid)
+                          : NaN;
+
+  // Cost breakdown
+  document.getElementById('b-hammer').textContent    = hammer > 0 ? fmt(actualHammer) + (isQualifying ? ' (inc 20% VAT)' : '') : '\u2014';
+  document.getElementById('b-feeb').textContent      = feeB > 0 ? fmt(feeB) : '\u2014';
+  document.getElementById('b-internet').textContent  = internetFee > 0 ? fmt(internetFee) : '\u2014';
+  document.getElementById('b-retrieval').textContent = hammer > 0 ? '\u00A360' : '\u2014';
+  document.getElementById('b-repairs').textContent   = repairsRaw > 0 ? fmt(repairs) + (withContingency ? ' (+20%)' : '') : '\u2014';
+  document.getElementById('b-transport').textContent = transport > 0 ? fmt(transport) : '\u2014';
+  document.getElementById('b-total').textContent     = (hammer > 0 && totalCost > 120) ? fmt(totalCost) : '\u2014';
+
+  // Metric cards
+  document.getElementById('roi-val').textContent   = !isNaN(roi) ? fmtPct(roi) : '\u2014';
+  document.getElementById('feeb-val').textContent  = feeB > 0 ? fmt(feeB) : '\u2014';
+  document.getElementById('fees-val').textContent  = hammer > 0 ? fmt(totalFees) : '\u2014';
+  document.getElementById('total-val').textContent = (hammer > 0 && totalCost > 120) ? fmt(totalCost) : '\u2014';
+
+  // Budget cap warning (£10,000)
+  const BUDGET = 10000;
+  const budgetFlagEl = document.getElementById('budget-cap-flag');
+  if (hammer > 0 && totalCost > BUDGET) {
+    budgetFlagEl.style.display = '';
+    budgetFlagEl.innerHTML = '<div class="flag flag-red" style="padding:8px 12px;background:var(--red-50);border-radius:10px"><div class="flag-dot"></div>'
+      + 'All-in cost ' + fmt(totalCost) + ' exceeds the £' + BUDGET.toLocaleString('en-GB') + ' budget cap.</div>';
+  } else if (hammer > 0 && totalCost > BUDGET * 0.9) {
+    budgetFlagEl.style.display = '';
+    budgetFlagEl.innerHTML = '<div class="flag flag-amber" style="padding:8px 12px;background:var(--amber-50);border-radius:10px"><div class="flag-dot"></div>'
+      + 'All-in cost ' + fmt(totalCost) + ' is within 10% of the £' + BUDGET.toLocaleString('en-GB') + ' budget cap.</div>';
+  } else {
+    budgetFlagEl.style.display = 'none';
+  }
+
+  // Resale discount guidance
+  if (cleanretail > 0) {
+    const note = document.getElementById('cat-discount-note');
+    note.style.display = '';
+    if (category === 'n') {
+      note.textContent = 'Cat N: deduct 20\u201325% from clean retail \u2192 suggested ceiling '
+        + fmt(cleanretail * 0.75) + '\u2013' + fmt(cleanretail * 0.80);
+    } else if (category === 's') {
+      note.textContent = 'Cat S: deduct 30\u201340% from clean retail \u2192 suggested ceiling '
+        + fmt(cleanretail * 0.60) + '\u2013' + fmt(cleanretail * 0.70);
+    } else {
+      note.textContent = 'Clean title: deduct 5\u201310% for negotiation margin \u2192 '
+        + fmt(cleanretail * 0.90) + '\u2013' + fmt(cleanretail * 0.95);
+    }
+  } else {
+    document.getElementById('cat-discount-note').style.display = 'none';
+  }
+
+  // Buying discount check \u2014 all categories
+  const buyingDiscountEl = document.getElementById('buying-discount-flag');
+  if (cleanretail > 0 && hammer > 0) {
+    const allInRatio  = totalCost / cleanretail;
+    const discountPct = Math.round((1 - allInRatio) * 100);
+    let threshold, targetMin, catLabel;
+    if (category === 'n')      { threshold = 0.60; targetMin = 40; catLabel = 'Cat N'; }
+    else if (category === 's') { threshold = 0.50; targetMin = 50; catLabel = 'Cat S'; }
+    else                       { threshold = 0.85; targetMin = 15; catLabel = 'clean title'; }
+    if (allInRatio > threshold) {
+      buyingDiscountEl.style.display = '';
+      buyingDiscountEl.innerHTML = '<div class="flag flag-amber"><div class="flag-dot"></div>'
+        + 'Buying discount only ' + discountPct + '% vs clean retail \u2014 '
+        + 'framework target for ' + catLabel + ' is ' + targetMin + '%+ below clean retail. '
+        + 'Check you are not overpaying at auction.</div>';
+    } else {
+      buyingDiscountEl.style.display = 'none';
+    }
+  } else {
+    buyingDiscountEl.style.display = 'none';
+  }
+
+  // Hard stop flags
+  const hardStopNoGo = [];
+  const marginNoGo   = [];
+
+  if (category === 'a')   hardStopNoGo.push('Cat A \u2014 vehicle cannot return to the road legally');
+  if (category === 'b')   hardStopNoGo.push('Cat B \u2014 body shell must be destroyed');
+  if (state.keys === 'no') hardStopNoGo.push('No keys \u2014 walk away');
+  if (hasFinance)          hardStopNoGo.push('Outstanding finance on HPI check');
+  if (mileageDisc)         hardStopNoGo.push('Mileage discrepancy on MOT history');
+  if (structural)          hardStopNoGo.push('Structural / chassis damage visible');
+  if (wideQuotes)          hardStopNoGo.push('Repair quotes vary wildly \u2014 hidden damage likely');
+  if (!isNaN(profit) && profit < minProfit) {
+    marginNoGo.push('Profit ' + fmt(profit) + ' is below minimum target of ' + fmt(minProfit));
+  }
+
+  const warnings = [];
+  if (state.v5c === 'no')  warnings.push('No V5C \u2014 \u00A325 DVLA replacement cost added (V62 form, allow 5 working days)');
+  if (lottype === 'qualifying') warnings.push('VAT Qualifying lot \u2014 20% VAT on hammer factored in. VAT-registered buyers can reclaim this, significantly changing the economics \u2014 seek advice if applicable.');
+  if (condition === 'nonrunner') warnings.push('Non-runner \u2014 higher transport risk, avoid until experienced');
+  if (category === 's') warnings.push('Cat S \u2014 structural repair required, re-inspection needed before DVLA re-registration');
+  if (category === 'n') warnings.push('Cat N \u2014 disclosure legally required when selling, permanent HPI marker');
+
+  const hardNoGo = [...hardStopNoGo, ...marginNoGo];
+  const allFlags = [
+    ...hardNoGo.map(f  => ({type:'red',  text:f})),
+    ...warnings.map(f  => ({type:'amber',text:f}))
+  ];
+
+  const flagsSection = document.getElementById('flags-section');
+  const flagsList    = document.getElementById('flags-list');
+  if (allFlags.length > 0) {
+    flagsSection.style.display = '';
+    flagsList.innerHTML = allFlags.map(f =>
+      '<div class="flag flag-' + f.type + '"><div class="flag-dot"></div>' + f.text + '</div>'
+    ).join('');
+  } else {
+    flagsSection.style.display = 'none';
+    flagsList.innerHTML = '';
+  }
+
+  // Max bid box
+  const maxBidValEl  = document.getElementById('maxbid-val');
+  const maxBidNoteEl = document.getElementById('maxbid-note');
+
+  if (!hammer || !resale) {
+    maxBidValEl.className  = 'maxbid-val';
+    maxBidValEl.textContent  = '\u2014';
+    maxBidNoteEl.textContent = 'Enter hammer price and resale value to calculate.';
+    maxBidNoteEl.style.color = 'var(--blue-600)';
+  } else if (hardStopNoGo.length > 0) {
+    maxBidValEl.className    = 'maxbid-nogo';
+    maxBidValEl.textContent  = 'N/A \u2014 Do not bid';
+    maxBidNoteEl.textContent = 'A hard stop flag means this deal must not be bid on regardless of price.';
+    maxBidNoteEl.style.color = 'var(--red-600)';
+  } else {
+    maxBidValEl.className    = 'maxbid-val';
+    maxBidValEl.textContent  = (!isNaN(maxBid) && maxBid > 0) ? fmt(maxBid) : '\u2014';
+    maxBidNoteEl.textContent = 'The highest hammer at which profit meets the \u00A3'
+      + minProfit + ' minimum target'
+      + (minProfit === 750 ? ' (raised to \u00A3750 because all-in cost exceeds \u00A35,000)' : '')
+      + '. Walk away if the auction passes this.'
+      + (isQualifying ? ' Adjusted for 20% VAT Qualifying uplift.' : '');
+    maxBidNoteEl.style.color = 'var(--blue-600)';
+  }
+
+  // Verdict box
+  const verdictBox    = document.getElementById('verdict-box');
+  const verdictLabel  = document.getElementById('verdict-label');
+  const verdictDetail = document.getElementById('verdict-detail');
+  const profitDisplay = document.getElementById('profit-display');
+
+  verdictBox.className = 'verdict-box';
+
+  if (!hammer || !resale) {
+    verdictBox.classList.add('verdict-warn');
+    verdictLabel.textContent  = 'Incomplete data';
+    verdictDetail.textContent = 'Enter hammer price and resale value to get a verdict';
+    profitDisplay.textContent = '\u2014';
+  } else if (hardNoGo.length > 0) {
+    verdictBox.classList.add('verdict-nogo');
+    verdictLabel.textContent  = 'NO GO \u2014 walk away';
+    verdictDetail.textContent = hardNoGo[0];
+    profitDisplay.textContent = !isNaN(profit) ? fmt(profit) : '\u2014';
+  } else if (!isNaN(profit) && profit >= minProfit) {
+    verdictBox.classList.add('verdict-go');
+    verdictLabel.textContent  = 'GO \u2014 bid up to maximum';
+    verdictDetail.textContent = 'Profit meets or exceeds \u00A3' + minProfit + ' target. Pre-bid at or below '
+      + ((!isNaN(maxBid) && maxBid > 0) ? fmt(maxBid) : '?') + '.';
+    profitDisplay.textContent = fmt(profit);
+  } else {
+    verdictBox.classList.add('verdict-nogo');
+    verdictLabel.textContent  = 'NO GO \u2014 margin too thin';
+    verdictDetail.textContent = 'Numbers do not clear the \u00A3' + minProfit + ' minimum profit threshold at this hammer price.';
+    profitDisplay.textContent = !isNaN(profit) ? fmt(profit) : '\u2014';
+  }
+}
+
+/* ── Deal data snapshot ────────────────────────────────────── */
+function getDealData() {
+  const hammer      = parseFloat(document.getElementById('hammer').value) || 0;
+  const repairsRaw  = parseFloat(document.getElementById('repairs').value) || 0;
+  const transport   = parseFloat(document.getElementById('transport').value) || 0;
+  const resale      = parseFloat(document.getElementById('resale').value) || 0;
+  const category    = document.getElementById('category').value;
+  const lottype     = document.getElementById('lottype').value;
+  const prebid      = document.getElementById('prebid').checked;
+  const withContingency = document.getElementById('contingency').checked;
+  const needsMot    = document.getElementById('motcheck').checked;
+  const repairs     = withContingency ? repairsRaw * 1.2 : repairsRaw;
+  const catSCost    = category === 's' ? 150 : 0;
+  const motCost     = needsMot ? 55 : 0;
+  const v5cCost     = state.v5c === 'no' ? 25 : 0;
+  const fixedOther  = 15 + 20 + 25 + catSCost + motCost + v5cCost;
+  const isQualifying = lottype === 'qualifying';
+  const actualHammer = isQualifying ? hammer * 1.2 : hammer;
+  const feeB         = hammer > 0 ? getFeeB(hammer) : 0;
+  const internetFee  = hammer > 0 ? getInternetFee(hammer, prebid) : 0;
+  const totalFees    = feeB + internetFee + 60;
+  const totalCost    = actualHammer + totalFees + repairs + transport + fixedOther;
+  const profit       = (resale > 0 && hammer > 0) ? resale - totalCost : null;
+  const roi          = profit !== null ? profit / totalCost * 100 : null;
+  const minProfit    = totalCost > 5000 ? 750 : 500;
+  const maxBid       = (resale > 0 && hammer > 0)
+                         ? calcMaxBid(resale, repairs, transport, fixedOther, minProfit, lottype, prebid)
+                         : null;
+  const isHardStop   = category==='a'||category==='b'||state.keys==='no'
+                       ||document.getElementById('finance').checked
+                       ||document.getElementById('mileagediscrepancy').checked
+                       ||document.getElementById('structural').checked
+                       ||document.getElementById('widequotes').checked;
+  const hardNoGo     = isHardStop || (profit !== null && profit < minProfit);
+  return {
+    make:  document.getElementById('make').value,
+    model: document.getElementById('model').value,
+    year:  document.getElementById('year').value,
+    lot:   document.getElementById('lot').value,
+    auctionDate: document.getElementById('auction-date').value,
+    category, lottype,
+    hammerBid: hammer, hammerPaid: actualHammer,
+    totalCost, resale, profit, roi,
+    maxBid: isHardStop ? null : maxBid,
+    verdict: hardNoGo ? 'nogo' : 'go',
+    ts: Date.now()
+  };
+}
+
+/* ── Reset form ──────────────────────────────────────────────── */
+function resetForm() {
+  ['make','model','year','mileage','hammer','repairs','transport','cleanretail','resale','lot','auction-date']
+    .forEach(function(id) { var el = document.getElementById(id); if (el) el.value = ''; });
+  document.getElementById('category').value  = 'clean';
+  document.getElementById('lottype').value   = 'margin';
+  document.getElementById('condition').value = 'drives';
+  document.getElementById('contingency').checked = true;
+  document.getElementById('prebid').checked      = true;
+  document.getElementById('motcheck').checked    = false;
+  document.getElementById('finance').checked     = false;
+  document.getElementById('mileagediscrepancy').checked = false;
+  document.getElementById('structural').checked  = false;
+  document.getElementById('widequotes').checked  = false;
+  setRadio('keys', 'yes');
+  setRadio('v5c',  'yes');
+  calc();
+}
+
+/* ── Save / load / render deals ────────────────────────────────────── */
+function saveDeal() {
+  const d = getDealData();
+  if (!d.hammerBid || !d.resale) { alert('Please enter at least a hammer price and resale value before saving.'); return; }
+  savedDeals.push(d);
+  persistDeals();
+  renderSaved();
+  updateSavedTab(savedDeals.length);
+}
+
+function loadDeal(i) {
+  const d = savedDeals[i];
+  if (!d) return;
+  document.getElementById('make').value  = d.make  || '';
+  document.getElementById('model').value = d.model || '';
+  document.getElementById('year').value  = d.year  || '';
+  document.getElementById('lot').value   = d.lot   || '';
+  document.getElementById('auction-date').value = d.auctionDate || '';
+  document.getElementById('hammer').value  = d.hammerBid || '';
+  document.getElementById('resale').value  = d.resale    || '';
+  document.getElementById('category').value = d.category || 'clean';
+  document.getElementById('lottype').value  = d.lottype  || 'margin';
+  switchTab('screener', document.querySelector('.tab'));
+  calc();
+}
+
+function renderSaved() {
+  const deals   = savedDeals;
+  const empty   = document.getElementById('saved-empty');
+  const content = document.getElementById('saved-content');
+  if (deals.length === 0) { empty.style.display=''; content.style.display='none'; return; }
+  empty.style.display='none'; content.style.display='';
+  const tbody = document.getElementById('deals-tbody');
+  tbody.innerHTML = deals.map(function(d,i) {
+    var hammerDisplay = fmt(d.hammerBid)
+      + (d.lottype === 'qualifying' ? '<br><span style="font-size:10px;color:var(--slate-400)">VAT Qual.</span>' : '');
+    var maxBidDisplay = d.maxBid === null ? '<span style="color:var(--slate-400);font-size:11px">N/A</span>'
+                        : (d.maxBid > 0 ? fmt(d.maxBid) : '\u2014');
+    var profitColor = (d.profit !== null && d.profit < 0) ? 'color:var(--red-500)' : 'color:var(--green-600)';
+    var lotRef = d.lot ? '<br><span style="font-size:10px;color:var(--slate-400)">#' + d.lot + '</span>' : '';
+    return '<tr>'
+      + '<td style="font-weight:600;color:var(--slate-800)">' + (d.make||'\u2014') + ' ' + (d.model||'') + ' ' + (d.year||'') + lotRef + '</td>'
+      + '<td><span style="font-size:11px;text-transform:uppercase;color:var(--blue-600);font-weight:600">' + d.category.toUpperCase() + '</span></td>'
+      + '<td style="font-size:11px;color:var(--slate-500)">' + (d.lottype==='qualifying'?'VAT Qual.':'Margin') + '</td>'
+      + '<td style="font-family:\'JetBrains Mono\',var(--font-mono,monospace)">' + hammerDisplay + '</td>'
+      + '<td style="font-family:\'JetBrains Mono\',var(--font-mono,monospace)">' + fmt(d.totalCost) + '</td>'
+      + '<td style="font-family:\'JetBrains Mono\',var(--font-mono,monospace)">' + fmt(d.resale) + '</td>'
+      + '<td style="font-family:\'JetBrains Mono\',var(--font-mono,monospace);' + profitColor + '">' + (d.profit !== null ? fmt(d.profit) : '\u2014') + '</td>'
+      + '<td style="font-family:\'JetBrains Mono\',var(--font-mono,monospace)">' + fmtPct(d.roi) + '</td>'
+      + '<td style="font-family:\'JetBrains Mono\',var(--font-mono,monospace)">' + maxBidDisplay + '</td>'
+      + '<td><span class="badge badge-' + d.verdict + '">' + (d.verdict==='go'?'GO':'NO GO') + '</span></td>'
+      + '<td><button class="load-btn" onclick="loadDeal(' + i + ')">Load</button></td>'
+      + '<td><button class="del-btn" onclick="deleteDeal(' + i + ')">Remove</button></td>'
+      + '</tr>';
+  }).join('');
+}
+
+function deleteDeal(i) {
+  savedDeals.splice(i,1);
+  persistDeals();
+  renderSaved();
+  updateSavedTab(savedDeals.length);
+}
+
+function clearAll() {
+  if (confirm('Clear all saved deals?')) { savedDeals = []; persistDeals(); renderSaved(); updateSavedTab(0); }
+}
+
+/* ── CSV Export ─────────────────────────────────────────────────────────── */
+function exportCSV() {
+  if (savedDeals.length === 0) { alert('No saved deals to export.'); return; }
+  const headers = ['Vehicle','Lot','Auction Date','Category','Type','Hammer Bid','All-in Cost','Resale','Profit','ROI %','Max Bid','Verdict'];
+  const rows = savedDeals.map(function(d) {
+    return [
+      [d.make||'', d.model||'', d.year||''].filter(Boolean).join(' '),
+      d.lot || '',
+      d.auctionDate || '',
+      d.category.toUpperCase(),
+      d.lottype === 'qualifying' ? 'VAT Qualifying' : 'Margin',
+      d.hammerBid  || '',
+      d.totalCost  !== null ? Math.round(d.totalCost)  : '',
+      d.resale     || '',
+      d.profit     !== null ? Math.round(d.profit)     : '',
+      d.roi        !== null ? d.roi.toFixed(1)          : '',
+      d.maxBid     !== null ? Math.round(d.maxBid)     : 'N/A',
+      d.verdict === 'go' ? 'GO' : 'NO GO'
+    ].map(function(v){ return '"' + String(v).replace(/"/g,'""') + '"'; }).join(',');
+  });
+  const csv  = [headers.join(',')].concat(rows).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = 'copart_deals.csv'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function updateSavedTab(n) {
+  document.getElementById('saved-tab').textContent = 'Saved Deals (' + n + ')';
+}
+
+function switchTab(id, btn) {
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active')});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  if (id==='saved') renderSaved();
+}
+
+/* ── Init ────────────────────────────────────────────────────────────────── */
+loadPersistedDeals();
+renderSaved();
+updateSavedTab(savedDeals.length);
+calc();
+</script>
